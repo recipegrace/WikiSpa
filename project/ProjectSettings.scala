@@ -4,7 +4,10 @@ import sbtassembly.AssemblyKeys._
 
 object ProjectSettings {
 
-  val sparkVersion = "1.5.2-SNAPSHOT"
+  //val sparkVersion = "1.5.2-SNAPSHOT"
+  val sparkVersion = "1.5.1"
+  val hadoopVersion = "2.2.0"
+  val electricVersion = "0.0.2"
   val currentScalaVersion ="2.11.5"
   val currentVersion="0.0.1"
   val organizationName="com.recipegrace.wikispa"
@@ -39,7 +42,7 @@ object ProjectSettings {
     scalaVersion := currentScalaVersion,
     organization := organizationName,
     libraryDependencies ++= Seq(
-      "com.recipegrace.electric" %% "core" %"0.0.2"
+      "com.recipegrace.electric" %% "core" % electricVersion
     ),
     resolvers ++= Resolvers.allResolvers)
 
@@ -47,11 +50,8 @@ object ProjectSettings {
     test in assembly := {},
     libraryDependencies ++= Seq(
       "org.apache.commons" % "commons-lang3" % "3.4",
-      "com.recipegrace.electric" %% "electric" %"0.0.2",
-      "org.apache.hadoop" % "hadoop-streaming" % "2.2.0" ,
-     /* "org.apache.hadoop" % "hadoop-mapreduce-client-core" % "2.2.0"  ,
-      "org.apache.hadoop" % "hadoop-common" % "2.2.0" ,
-    */
+      "com.recipegrace.electric" %% "electric" % electricVersion,
+      "org.apache.hadoop" % "hadoop-streaming" % hadoopVersion % "provided" ,
       "org.apache.spark" %% "spark-core" % sparkVersion % "provided"
     ), 
 dependencyOverrides ++= Set(

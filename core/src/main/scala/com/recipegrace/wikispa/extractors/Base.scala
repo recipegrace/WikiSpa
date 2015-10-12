@@ -1,6 +1,6 @@
 package com.recipegrace.wikispa.extractors
 
-import org.dbpedia.extraction.sources.XMLSource
+import org.dbpedia.extraction.sources.{WikiPage, XMLSource}
 import org.dbpedia.extraction.util.Language
 import org.dbpedia.extraction.wikiparser.{WikiParser, PageNode}
 
@@ -14,17 +14,10 @@ trait Base[T] {
   def getParser(): WikiParser
 
   def extract[T](xmlElem: Elem) = {
-    val parser = getParser()
     try {
-      val pages = XMLSource.fromXML(xmlElem, Language.English)
-      if (pages.isEmpty) None
-      else {
-        val page = pages.head
-
-        parser(page) match {
-          case Some(pageNode) => Some(page.id, extractComponent(pageNode))
-          case _ => None
-        }
+      extractWikiPage(xmlElem) match {
+        case Some(x) => extractByPage(x)
+        case _ => None
       }
     } catch {
       case _: Throwable => None
@@ -32,7 +25,25 @@ trait Base[T] {
 
   }
 
+  def extractWikiPage(xmlElem:Elem) = {
+
+    val pages = XMLSource.fromXML(xmlElem, Language.English)
+    if (pages.isEmpty) None
+    else {
+      val page = pages.head
+      Some(page)
+    }
+  }
+
   def extractComponent(pageNode: PageNode): T
 
+  def extractByPage(wikiPage:WikiPage) = {
 
+    val parser = getParser()
+    parser(wikiPage) match {
+      case Some(pageNode) => Some((wikiPage.id, extractComponent(pageNode)))
+      case _ => None
+    }
+
+  }
 }

@@ -1,5 +1,7 @@
 package com.recipegrace.wikispa.spark
 
+import java.nio.charset.StandardCharsets
+
 import com.recipegrace.biglibrary.electric.ElectricJobTest
 
 /**
@@ -7,18 +9,15 @@ import com.recipegrace.biglibrary.electric.ElectricJobTest
  */
 class CategoryCountTest extends ElectricJobTest {
 
-  test("wordcount test with spark") {
-/*
-    val input = createOutPutFile()
-    createFile("hello world", input)
-    val output = createOutPutFile(false)
-    //launch(CategoryCount, Map("input" -> input, "output" -> output))
+  test("category count test") {
 
-    val lines = readFilesInDirectory(output, "part")
-    lines should contain("hello\t1")
-    lines should contain("world\t1")
-  */
-    CategoryCount.main(Array())
-  }
+
+      val output = createOutPutFile(false)
+      launch(CategoryCount, Map("output" -> output, "input"-> "files/enwiki-sample.xml"))
+
+      val lines = readFilesInDirectory(output, "part", StandardCharsets.ISO_8859_1)
+      lines should contain("Objectivists\t1")
+      lines should contain("Russian essayists\t1")
+    }
 
 }
