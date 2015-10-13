@@ -22,3 +22,6 @@ project/project
 .classpath
 .settings/
 .idea/
+
+#Project-specific changes
+.tests/
