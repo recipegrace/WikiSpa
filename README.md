@@ -4,9 +4,9 @@ WikiSpa
 This is a simple wrapper around the dbpedia-extraction framework mainly to make sure each execution is independent.
 The project is focused in executing wikipedia queries locally.
 
-Below code prints out all wikipedia page titles and pageid separated by TAB. 
-The code can be runs on my laptop on the entire wikipedia data in less than three hours, For the rich and the impatient, the code below can be executed 
-in a Hadoop cluster also.   
+Below code prints out all the wikipedia page titles and pageids separated by TAB into a file specified.  
+The code runs on my laptop for the latest wikipedia data(enwiki-20151002-pages-articles-multistream.xml) in less than three hours.
+ For the rich and the impatient, the code below can be deployed and executed in a Hadoop cluster.    
 
 ```scala
 object TitlePerPage extends ElectricJob with WikiAccess with SequentialFileAccess {
