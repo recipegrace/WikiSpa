@@ -26,13 +26,16 @@ trait Base[T] {
   }
 
   def extractWikiPage(xmlElem:Elem) = {
-
+  try {
     val pages = XMLSource.fromXML(xmlElem, Language.English)
     if (pages.isEmpty) None
     else {
       val page = pages.head
       Some(page)
     }
+  } catch {
+    case _: Throwable => None
+  }
   }
 
   def extractComponent(pageNode: PageNode): T
