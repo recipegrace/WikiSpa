@@ -26,4 +26,9 @@ object TitlePerPage extends ElectricJob with WikiAccess with SequentialFileAcces
 }
 ```
 
+Repository location
+
+```scala  
+"Recipegrace repo" at "http://recipegrace.com:8080/nexus/content/repositories/releases/"
+```
 
