@@ -35,8 +35,7 @@ The code runs on a (16GB, OSX) laptop for the latest wikipedia data(enwiki-20151
  For the rich and the impatient, the code below can be deployed and executed in a Hadoop cluster.    
 
 
-```scala
-Repository location
+<h3>Repository location </h3>
 
 ```scala  
 "Recipegrace repo" at "http://recipegrace.com:8080/nexus/content/repositories/releases/"
