@@ -18,7 +18,7 @@ object CategoryPerPage extends SimpleJob with WikiAccess{
         .map(f => Categories.extract(f).getOrElse((0L, List(): List[String])))
 
         .filter(f => f._1 != 0 && f._2.nonEmpty)
-        .map(f=> f._1 + "\t"+f._2.mkString("\u0001"))
+        .map(f=> f._1 + "\t"+f._2.mkString(","))
 
     writeFile(categoriesCount,output)
 

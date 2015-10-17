@@ -13,7 +13,7 @@ class CategoryPerPageTest extends SimpleJobTest {
   test("category per  page  test") {
 
     val output = createTempPath()
-    launch(CategoryCount, TwoArgument("files/enwiki-sample.xml",output))
+    launch(CategoryPerPage, TwoArgument("files/enwiki-sample.xml",output))
 
     val lines = readFilesInDirectory(output, "part", StandardCharsets.ISO_8859_1)
     lines should contain("Objectivists\t1")
