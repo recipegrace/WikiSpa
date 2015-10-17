@@ -1,22 +1,19 @@
 package com.recipegrace.wikispa.spark
 
-import com.recipegrace.biglibrary.core.Argument
-import com.recipegrace.biglibrary.electric.{SequentialFileAccess, ElectricContext, ElectricJob}
+import com.recipegrace.biglibrary.electric.jobs.SimpleJob
+import com.recipegrace.biglibrary.electric.{ElectricContext}
 import com.recipegrace.wikispa.extractors.Categories
 
 /**
  * Created by Ferosh Jacob on 10/10/15.
  */
-object CategoryCount extends ElectricJob with WikiAccess with SequentialFileAccess {
-  val outputArgument = Argument("output")
-  val inputArgument = Argument("input")
+object CategoryCount extends SimpleJob with WikiAccess  {
 
-  override  val namedArguments = Set(inputArgument,outputArgument)
-  override def job(args: Map[Argument, String], sc: ElectricContext): Unit = {
 
-    implicit val context=sc
+  override def execute(input: String, output: String)(ec: ElectricContext)={
+    implicit val context = ec
     val categoriesCount =
-      wikiPages(args(inputArgument))
+      wikiPages(input)
         .map(f => Categories.extractByPage(f).getOrElse((0L, List(): List[String])))
 
         .filter(f => f._1 != 0 && f._2.nonEmpty)
@@ -24,9 +21,6 @@ object CategoryCount extends ElectricJob with WikiAccess with SequentialFileAcce
         .reduceByKey(_ + _)
         .map(f=> f._1 + "\t"+f._2)
 
-    writeFile(categoriesCount, args(outputArgument))
-
+    writeFile(categoriesCount, output)
   }
-
-
 }
