@@ -4,7 +4,13 @@ WikiSpa
 This is a simple wrapper around the dbpedia-extraction framework mainly to make sure each execution is independent.
 The project is focused in executing wikipedia queries locally.
 
-Below code prints out all the wikipedia page titles and pageids separated by TAB into a file specified.  
+Below code prints out all the wikipedia pageids and their categories separated by TAB into a file specified. 
+The categories itself are separated by the "\u0001" character.
+```text
+290     ISO basic Latin letters,Vowel letters
+334     Time scales
+```
+  
 The code runs on my laptop for the latest wikipedia data(enwiki-20151002-pages-articles-multistream.xml) in less than three hours.
  For the rich and the impatient, the code below can be deployed and executed in a Hadoop cluster.    
 
@@ -14,8 +20,10 @@ object CategoryPerPage extends SimpleJob with WikiAccess{
     implicit val context = ec
     val categoriesCount =
       wikiXML(input)
-        .map(f => Categories.extract(f).getOrElse((0L, List(): List[String])))
-
+        .map(f => {
+             //Category's extract method return (wikiPageId:Long, categories:List[String])
+             Categories.extract(f).getOrElse((0L, List(): List[String]))
+         })
         .filter(f => f._1 != 0 && f._2.nonEmpty)
         .map(f=> f._1 + "\t"+f._2.mkString("\u0001"))
 
