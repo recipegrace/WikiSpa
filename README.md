@@ -31,7 +31,7 @@ An example output is given below.
 334     Time scales
 ```
   
-The code runs on my laptop for the latest wikipedia data(enwiki-20151002-pages-articles-multistream.xml) in less than three hours.
+The code runs on a (16GB, OSX) laptop for the latest wikipedia data(enwiki-20151002-pages-articles-multistream.xml) in less than three hours.
  For the rich and the impatient, the code below can be deployed and executed in a Hadoop cluster.    
 
 
