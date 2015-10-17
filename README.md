@@ -9,23 +9,21 @@ The code runs on my laptop for the latest wikipedia data(enwiki-20151002-pages-a
  For the rich and the impatient, the code below can be deployed and executed in a Hadoop cluster.    
 
 ```scala
-object TitlePerPage extends ElectricJob with WikiAccess with SequentialFileAccess {
-  val outputArgument = Argument("output")
-  val inputArgument = Argument("input")
+object CategoryPerPage extends SimpleJob with WikiAccess{
+  override def execute(input: String, output: String)(ec: ElectricContext)= {
+    implicit val context = ec
+    val categoriesCount =
+      wikiXML(input)
+        .map(f => Categories.extract(f).getOrElse((0L, List(): List[String])))
 
-  override  val namedArguments = Set(inputArgument,outputArgument)
-  override def job(args: Map[Argument, String], sc: ElectricContext) : Unit = {
+        .filter(f => f._1 != 0 && f._2.nonEmpty)
+        .map(f=> f._1 + "\t"+f._2.mkString("\u0001"))
 
-    implicit val context=sc
-    val idAndTitle =
-      wikiPages(args(inputArgument))
-        .map(f=> f.id +"\t"+f.title.decoded)
-    writeFile(idAndTitle, args(outputArgument))
+    writeFile(categoriesCount,output)
 
   }
 }
 ```
-
 Repository location
 
 ```scala  
