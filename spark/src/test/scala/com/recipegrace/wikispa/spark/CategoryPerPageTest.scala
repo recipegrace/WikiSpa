@@ -16,8 +16,7 @@ class CategoryPerPageTest extends SimpleJobTest {
     launch(CategoryPerPage, TwoArgument("files/enwiki-sample.xml",output))
 
     val lines = readFilesInDirectory(output, "part", StandardCharsets.ISO_8859_1)
-    lines should contain("Objectivists\t1")
-    lines should contain("Russian essayists\t1")
+    lines should contain("290\tISO basic Latin letters,Vowel letters")
   }
 
 }
