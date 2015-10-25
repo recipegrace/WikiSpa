@@ -9587,6 +9587,47 @@ Connes was awarded the [[Fields Medal]] in 1982, the [[Crafoord Prize]] in 2001 
       <sha1>ikk85sz6ok9wub250i190jsixt4si2c</sha1>
     </revision>
   </page>
+    <page>
+        <title>UAB</title>
+        <ns>0</ns>
+        <id>10</id>
+        <redirect title="UAB" />
+        <revision>
+            <id>631144794</id>
+            <parentid>381202555</parentid>
+            <timestamp>2014-10-26T04:50:23Z</timestamp>
+            <contributor>
+                <username>Paine Ellsworth</username>
+                <id>9092818</id>
+            </contributor>
+            <comment>add [[WP:RCAT|rcat]]s</comment>
+            <model>wikitext</model>
+            <format>text/x-wiki</format>
+            <text xml:space="preserve">
+'''UAB''' may stand for:
+
+*[[Lascivious]] or unacceptable behavior
+*Until advised by
+*User address book
+*[[Uždaroji akcinė bendrovė]], a type of limited liability company in Lithuania
+
+;Companies and organizations:
+*[[United Airways (Bangladesh)]]
+*[[Autonomous University of Barcelona]]
+*[[University of Alabama at Birmingham]]
+** [[UAB Blazers]], the athletic program of the above school
+*[[University of Alberta]]
+*[[Unemployment Assistance Board]]
+*[[Underwater Archaeology Branch, Naval History &amp; Heritage Command]]
+*[[Unix AppleTalk Bridge]]
+*[[University Activities Board]] ([[Clarion University of Pennsylvania]])
+*[[Union des Automobilistes Bulgares]], a member of the [[FIA]]
+
+{{disambig}}
+      </text>
+            <sha1>4ro7vvppa5kmm0o1egfjztzcwd0vabw</sha1>
+        </revision>
+    </page>
   <page>
     <title>Allan Dwan</title>
     <ns>0</ns>
@@ -9782,4 +9823,5 @@ Print ISBN 978-0-7864-3485-5 Ebook ISBN 978-0-7864-9040-0
       <sha1>a8sxnk5wyqeao8l20nlce2cu9wvzcui</sha1>
     </revision>
   </page>
+
 </mediawiki>
