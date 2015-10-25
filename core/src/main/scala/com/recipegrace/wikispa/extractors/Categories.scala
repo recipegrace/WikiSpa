@@ -19,7 +19,7 @@ object Categories  extends Base[List[String]]{
     case TextNode(text, _) :: Nil => !text.startsWith(":") // links starting wih ':' are actually only related, not the category of this article
     case _ => true
   }
-  override def extractComponent(pageNode: PageNode): List[String] = {
+   def extractComponent(pageNode: PageNode): List[String] = {
     val links = collectCategoryLinks(pageNode).filter(isCategoryForArticle)
     val totalLinks = for (
       each <- links if each.retrieveText.getOrElse("").startsWith("Category:")
@@ -27,4 +27,6 @@ object Categories  extends Base[List[String]]{
 
     totalLinks
   }
+
+
 }

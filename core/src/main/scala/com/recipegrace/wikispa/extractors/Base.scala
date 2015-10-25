@@ -2,6 +2,7 @@ package com.recipegrace.wikispa.extractors
 
 import org.dbpedia.extraction.sources.{WikiPage, XMLSource}
 import org.dbpedia.extraction.util.Language
+import org.dbpedia.extraction.wikiparser.impl.wikipedia.Redirect
 import org.dbpedia.extraction.wikiparser.{WikiParser, PageNode}
 
 import scala.xml.Elem
@@ -13,7 +14,7 @@ trait Base[T] {
 
   def getParser(): WikiParser
 
-  def extract[T](xmlElem: Elem) = {
+  def extract(xmlElem: Elem):Option[(Long,T)] = {
     try {
       extractWikiPage(xmlElem) match {
         case Some(x) => extractByPage(x)
@@ -25,7 +26,7 @@ trait Base[T] {
 
   }
 
-  def extractWikiPage(xmlElem:Elem) = {
+  def extractWikiPage(xmlElem:Elem):Option[WikiPage] = {
   try {
     val pages = XMLSource.fromXML(xmlElem, Language.English)
     if (pages.isEmpty) None
@@ -40,13 +41,13 @@ trait Base[T] {
 
   def extractComponent(pageNode: PageNode): T
 
-  def extractByPage(wikiPage:WikiPage) = {
-
-    val parser = getParser()
-    parser(wikiPage) match {
-      case Some(pageNode) => Some((wikiPage.id, extractComponent(pageNode)))
-      case _ => None
+  def extractByPage(page:WikiPage):Option[(Long,T)] = {
+    try {
+      val parser = getParser()
+      for( pageNode <- parser(page))
+        yield (page.id, extractComponent(pageNode))
+    } catch {
+      case _:Throwable => None
     }
-
   }
 }

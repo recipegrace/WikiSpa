@@ -19,4 +19,8 @@ class BasicTest extends FunSuite with Matchers {
     val pages =XML.loadFile("files/enwiki-sample.xml") \ "page"
     nodeToElem(pages.last)
   }
+  def lastPage(file:String) = {
+    val pages =XML.loadFile(file) \ "page"
+    nodeToElem(pages.last)
+  }
 }
