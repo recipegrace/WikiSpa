@@ -1,22 +1,23 @@
 package com.recipegrace.wikispa.spark
 
-import com.recipegrace.biglibrary.electric.jobs.TwoArgument
 import java.nio.charset.StandardCharsets
 
+import com.recipegrace.biglibrary.electric.jobs.TwoArgument
 import com.recipegrace.biglibrary.electric.tests.SimpleJobTest
 
 /**
  * Created by Ferosh Jacob on 10/10/15.
  */
-class CategoryPerPageTest extends SimpleJobTest {
+class TitlePerPageTest extends SimpleJobTest {
 
   test("category per  page  test") {
 
     val output = createTempPath()
-    launch(CategoryPerPage, TwoArgument("files/enwiki-sample.xml",output))
+    launch(TitlePerPage, TwoArgument("files/enwiki-sample.xml",output))
+
 
     val lines = readFilesInDirectory(output, "part", StandardCharsets.ISO_8859_1)
-    lines should contain("290\tISO basic Latin letters\u0001Vowel letters")
+    lines should contain("290\t-\tA")
   }
 
 }
