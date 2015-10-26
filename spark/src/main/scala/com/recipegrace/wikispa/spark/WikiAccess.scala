@@ -2,6 +2,7 @@ package com.recipegrace.wikispa.spark
 
 import com.recipegrace.biglibrary.electric.{ElectricContext, ElectricJob}
 import com.recipegrace.wikispa.extractors.{Pages, Categories}
+import org.apache.hadoop.io.{Text, LongWritable}
 import org.apache.hadoop.mapred.JobConf
 import org.apache.spark.rdd.RDD
 import org.dbpedia.extraction.sources.WikiPage
@@ -14,7 +15,7 @@ import scala.xml.{XML, Elem}
 trait WikiAccess {
 
 
-  def wikiXML(input:String)(implicit ec: ElectricContext): RDD[Elem] = {
+  def wikiXMLStreaming(input:String)(implicit ec: ElectricContext): RDD[Elem] = {
     val jobConf = new JobConf()
     jobConf.set("stream.recordreader.class",
       "org.apache.hadoop.streaming.StreamXmlRecordReader")
@@ -31,11 +32,37 @@ trait WikiAccess {
         <mediawiki>{xml}</mediawiki>
       }
   }
-  def wikiPages(input:String)(implicit ec: ElectricContext): RDD[WikiPage] = {
-    wikiXML(input)
-    .map(Pages.extractWikiPage)
-    .filter(f=> f.nonEmpty)
-    .map(f=> f.get)
+  private def loadWikiPageFromXML(xml:RDD[Elem]):RDD[WikiPage] = {
+    xml.map(Pages.extractWikiPage)
+      .filter(f=> f.nonEmpty)
+      .map(f=> f.get)
+  }
+  def wikiPagesStreaming(input:String)(implicit ec: ElectricContext): RDD[WikiPage] = {
+
+    loadWikiPageFromXML(wikiXMLStreaming(input))
+  }
+
+  def wikiPages(input:String,serialization:String)(implicit ec: ElectricContext): RDD[WikiPage] = {
+
+     serialization match {
+       case  "SequenceFile" => {
+
+       val xmlRDD=
+         ec.sparkContext.sequenceFile[LongWritable, Text](input)
+         .map(f=> f._2)
+         .map(f=>XML.loadString(f.toString))
+
+         loadWikiPageFromXML(xmlRDD)
+       }
+       case "ObjectFile" => {
+         val xmlRDD=ec.sparkContext.objectFile[Elem](input)
+         loadWikiPageFromXML(xmlRDD)
+       }
+       case _ =>{
+         wikiPagesStreaming(input)
+       }
+     }
+
   }
 
 }
