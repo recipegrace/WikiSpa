@@ -4,13 +4,14 @@ import com.recipegrace.biglibrary.electric.{ElectricJob, ElectricContext}
 import com.recipegrace.biglibrary.electric.jobs.{ArgumentsToMap, SequenceFileJob, TwoInputJob, SimpleJob}
 import com.recipegrace.wikispa.extractors.LinkObjects.Link
 import com.recipegrace.wikispa.extractors.Links
+import com.recipegrace.wikispa.spark.CategoryPerPage._
 import org.apache.spark.rdd.RDD
 
 
 /**
  * Created by Ferosh Jacob on 10/10/15.
  */
-case class AllLinksArgument(input:String, redirects:String, disambigs:String, internalLinks:String)
+case class AllLinksArgument(input:String, redirects:String, disambigs:String, internalLinks:String, serialization:String)
 object LinksPerPage extends SequenceFileJob[AllLinksArgument] with WikiAccess with ArgumentsToMap{
   val WIKIURL = """https?\:\/\/en\.wikipedia\.org\/wiki\/(.*)""".r
 
@@ -45,7 +46,7 @@ object LinksPerPage extends SequenceFileJob[AllLinksArgument] with WikiAccess wi
    // implicit val context = sc
 
     val allPages =
-      wikiPages(t.input)
+      wikiPages(t.input, t.serialization)
         .map(f=>(f.id,formatLink(f.title), Links.extractByPage(f)))
         .filter(f=> f._3.nonEmpty)
 
@@ -75,16 +76,17 @@ object LinksPerPage extends SequenceFileJob[AllLinksArgument] with WikiAccess wi
 
   override def parse(args: Array[String]): AllLinksArgument = {
 
-    require(args.length==8, "Should have --input val --redirects val --disambigs val --internalLinks val")
+    require(args.length==10, "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
 
     val mapArgs=convertArgsToMap(args)
 
-    require(mapArgs.contains("input"), "Should have --input val --redirects val --disambigs val --internalLinks val")
-    require(mapArgs.contains("redirects"), "Should have --input val --redirects val --disambigs val --internalLinks val")
-    require(mapArgs.contains("disambigs"), "Should have --input val --redirects val --disambigs val --internalLinks val")
-    require(mapArgs.contains("internalLinks"), "Should have --input val --redirects val --disambigs val --internalLinks val")
+    require(mapArgs.contains("input"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
+    require(mapArgs.contains("redirects"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
+    require(mapArgs.contains("disambigs"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
+    require(mapArgs.contains("internalLinks"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
+    require(mapArgs.contains("serialization"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
 
-    AllLinksArgument(mapArgs("input"), mapArgs("redirects"), mapArgs("disambigs"), mapArgs("internalLinks"))
+    AllLinksArgument(mapArgs("input"), mapArgs("redirects"), mapArgs("disambigs"), mapArgs("internalLinks"), mapArgs("serialization"))
 
   }
 }
