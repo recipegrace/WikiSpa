@@ -9,7 +9,7 @@ object ProjectSettings {
   val hadoopVersion = "2.2.0"
   val electricVersion = "0.0.5"
   val currentScalaVersion ="2.11.5"
-  val currentVersion="0.0.5"
+  val currentVersion="0.0.7"
   val organizationName="com.recipegrace.wikispa"
 
   // sbt-assembly settings for building a fat jar
@@ -48,7 +48,10 @@ object ProjectSettings {
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.4"
     ),
     parallelExecution in Test := false,
-    resolvers ++= Resolvers.allResolvers)
+    resolvers ++= Resolvers.allResolvers,
+    publishTo := Some(Resolvers.recipegrace),
+    credentials +=Credentials(Path.userHome / ".sbt" / ".credentials")
+)
 
   val electricJobSettings = Seq(
     test in assembly := {},
@@ -64,7 +67,7 @@ object ProjectSettings {
   val wikispaSettings = Seq(
     test in assembly := {},
     libraryDependencies ++= Seq(
-   "org.dbpedia.extraction" % "core" % "4.0",
+   "org.dbpedia.extraction" % "core" % "4.1-SNAPSHOT",
      "org.scalaj" %% "scalaj-http" % "1.1.5"
     )
   )
