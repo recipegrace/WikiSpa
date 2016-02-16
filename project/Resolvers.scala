@@ -6,6 +6,6 @@ object Resolvers {
   val recipegraceSnapshots = "Recipegrace snapshots" at "http://recipegrace.com:8080/nexus/content/repositories/snapshots/"
   val aksw="AKSW Maven2 Repository" at "http://maven.aksw.org/repository/internal"
   val cloudera = "Cloudera" at "https://repository.cloudera.com/artifactory/cloudera-repos"
-  val allResolvers = Seq(Resolver.mavenLocal,mvnrepository,aksw,recipegrace)
+  val allResolvers = Seq(Resolver.mavenLocal,mvnrepository,aksw,recipegrace, recipegraceSnapshots)
 
 }
