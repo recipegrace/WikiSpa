@@ -3,7 +3,7 @@ package com.recipegrace.wikispa.spark
 import java.nio.charset.StandardCharsets
 
 import com.recipegrace.biglibrary.core.BaseTest
-import com.recipegrace.biglibrary.electric.jobs.{TwoInputJob, ThreeArgument, TwoArgument}
+import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
 import com.recipegrace.biglibrary.electric.tests.{ElectricJobTest, SimpleJobTest}
 import com.recipegrace.wikispa.spark.SplitWikiFile.SerializationType
 

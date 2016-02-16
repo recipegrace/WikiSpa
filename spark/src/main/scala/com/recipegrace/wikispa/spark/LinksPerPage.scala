@@ -42,7 +42,7 @@ object LinksPerPage extends SequenceFileJob[AllLinksArgument] with WikiAccess wi
     writeFile(content,fileName)
   }
 
-  override def job(t: AllLinksArgument)(implicit sc: ElectricContext): Unit = {
+  def execute(t: AllLinksArgument)(implicit sc: ElectricContext): Unit = {
    // implicit val context = sc
 
     val allPages =

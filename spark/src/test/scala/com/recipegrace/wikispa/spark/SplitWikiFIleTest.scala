@@ -2,8 +2,8 @@ package com.recipegrace.wikispa.spark
 
 import java.nio.charset.StandardCharsets
 
+import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
 import com.recipegrace.biglibrary.electric.tests.TwoInputJobTest
-import com.recipegrace.biglibrary.electric.jobs.ThreeArgument
 
 /**
  * Created by Ferosh Jacob on 10/25/15.

@@ -2,7 +2,7 @@ package com.recipegrace.wikispa.spark
 
 import java.nio.charset.StandardCharsets
 
-import com.recipegrace.biglibrary.electric.jobs.ThreeArgument
+import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
 import com.recipegrace.wikispa.spark.SplitWikiFile.SerializationType
 
 /**

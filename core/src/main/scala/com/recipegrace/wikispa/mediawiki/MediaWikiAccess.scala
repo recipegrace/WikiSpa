@@ -12,7 +12,7 @@ trait MediaWikiAccess {
     "rvprop" -> "content")
   private def toMediaWiki(webXML: Elem) = {
     val rev = webXML \\ "rev"
-  
+
     val wikiText = if(rev.isEmpty) <rev></rev>else  rev(0)
     <mediawiki>
       <page>

@@ -1,6 +1,7 @@
 package com.recipegrace.wikispa.spark
 
-import com.recipegrace.biglibrary.electric.jobs.{ThreeArgument, TwoInputJob}
+import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
+import com.recipegrace.biglibrary.electric.jobs.TwoInputJob
 import com.recipegrace.biglibrary.electric.tests.TwoInputJobTest
 import com.recipegrace.wikispa.spark.SplitWikiFile.SerializationType
 
