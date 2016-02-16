@@ -1,1 +1,1 @@
-script: "sbt test"
+script: "./sbt test"
