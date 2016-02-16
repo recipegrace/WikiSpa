@@ -1,7 +1,7 @@
 WikiSpa
 ==========
 	
-[![Build Status](https://travis-ci.org/wikispa/WikiSpa.svg?branch=master)](https://travis-ci.org//wikispa/WikiSpa)
+[![Build Status](https://travis-ci.org/wikispa/WikiSpa.svg?branch=master)](https://travis-ci.org/wikispa/WikiSpa)
 
 This is a simple wrapper around the dbpedia-extraction framework mainly to make sure each execution is independent.
 The project is focused in executing wikipedia queries locally.
