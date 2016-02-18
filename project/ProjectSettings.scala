@@ -9,7 +9,7 @@ object ProjectSettings {
   val hadoopVersion = "2.2.0"
   val electricVersion = "0.0.12"
   val currentScalaVersion ="2.10.5"
-  val currentVersion="0.0.8"
+  val currentVersion="0.0.9"
   val organizationName="com.recipegrace.wikispa"
 
   // sbt-assembly settings for building a fat jar
