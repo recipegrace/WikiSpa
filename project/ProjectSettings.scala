@@ -7,8 +7,8 @@ object ProjectSettings {
   //val sparkVersion = "1.5.2-SNAPSHOT"
   val sparkVersion = "1.5.1"
   val hadoopVersion = "2.2.0"
-  val electricVersion = "0.0.11"
-  val currentScalaVersion ="2.11.7"
+  val electricVersion = "0.0.12"
+  val currentScalaVersion ="2.10.5"
   val currentVersion="0.0.8"
   val organizationName="com.recipegrace.wikispa"
 
@@ -67,7 +67,7 @@ object ProjectSettings {
   val wikispaSettings = Seq(
     test in assembly := {},
     libraryDependencies ++= Seq(
-   "org.dbpedia.extraction" % "core" % "4.1-SNAPSHOT",
+   "org.dbpedia.extraction" % "core" % "4.2-SNAPSHOT",
      "org.scalaj" %% "scalaj-http" % "1.1.5"
     )
   )
