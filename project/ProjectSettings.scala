@@ -5,10 +5,10 @@ import sbtassembly.AssemblyKeys._
 object ProjectSettings {
 
   //val sparkVersion = "1.5.2-SNAPSHOT"
-  val sparkVersion = "1.5.1"
+  val sparkVersion = "1.5.2"
   val hadoopVersion = "2.2.0"
   val electricVersion = "0.0.12"
-  val currentScalaVersion ="2.10.5"
+  val currentScalaVersion ="2.10.4"
   val currentVersion="0.0.9"
   val organizationName="com.recipegrace.wikispa"
 
@@ -42,14 +42,16 @@ object ProjectSettings {
     scalaVersion := currentScalaVersion,
     organization := organizationName,
     libraryDependencies ++= Seq(
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0",
       "com.recipegrace.electric" %% "core" % electricVersion
     ),
     dependencyOverrides ++= Set(
-      "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.4"
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0"
     ),
     parallelExecution in Test := false,
     resolvers ++= Resolvers.allResolvers,
     publishTo := Some(Resolvers.recipegrace),
+
     credentials +=Credentials(Path.userHome / ".sbt" / ".credentials")
 )
 
