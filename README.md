@@ -4,7 +4,7 @@ WikiSpa
 [![Build Status](https://travis-ci.org/recipegrace/WikiSpa.svg?branch=master)](https://travis-ci.org/recipegrace/WikiSpa)
 
 This is a simple wrapper around the dbpedia-extraction framework mainly to make sure each execution is independent.
-The project is focused in executing wikipedia queries locally.
+The project is focused in executing wikipedia queries locally or in a Spark cluster.
 
 An example to print out all the wikipedia pageids and their categories separated by TAB is shown below. 
 ```scala
