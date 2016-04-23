@@ -8,7 +8,7 @@ object ProjectSettings {
   val sparkVersion = "1.5.2"
   val hadoopVersion = "2.2.0"
   val electricVersion = "0.0.12"
-  val currentScalaVersion ="2.10.4"
+  val currentScalaVersion ="2.11.7"
   val currentVersion="0.0.9"
   val organizationName="com.recipegrace.wikispa"
 
