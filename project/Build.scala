@@ -4,12 +4,16 @@ object Build extends Build {
 
   import ProjectSettings._
 
-  lazy val core = (project in file("core")).
-    settings(coreSettings ++ wikispaSettings: _*)
+  
+  lazy val wikispaCore = (project in file("wikispa-core"))
+    .settings(coreSettings ++ wikispaSettings: _*)
 
-  lazy val spark = (project in file("spark") dependsOn(core))
+  lazy val wikispaSpark = (project in file("wikispa-spark") dependsOn(wikispaCore))
     .settings(coreSettings ++ electricJobSettings ++ sparkAssemblySettings: _*)
 
+  lazy val wikispa = (project in file("."))
+    .settings(coreSettings)  
+    .aggregate(wikispaCore,wikispaSpark)
 }
 
 

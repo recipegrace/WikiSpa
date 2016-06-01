@@ -4,13 +4,11 @@ import sbtassembly.AssemblyKeys._
 
 object ProjectSettings {
 
-  //val sparkVersion = "1.5.2-SNAPSHOT"
-  val sparkVersion = "1.5.2"
+  val sparkVersion = "1.6.1"
   val hadoopVersion = "2.2.0"
-  val electricVersion = "0.0.12"
-  val currentScalaVersion ="2.11.7"
-  val currentVersion="0.0.9"
-  val organizationName="com.recipegrace.wikispa"
+  val electricVersion = "0.0.2"
+  val currentVersion="0.0.1-SNAPSHOT"
+  val organizationName="com.recipegrace"
 
   // sbt-assembly settings for building a fat jar
   lazy val sparkAssemblySettings = Seq(
@@ -39,27 +37,24 @@ object ProjectSettings {
   )
   val coreSettings = Seq(
     version := currentVersion,
-    scalaVersion := currentScalaVersion,
+    scalaVersion := "2.10.6",
     organization := organizationName,
     libraryDependencies ++= Seq(
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0",
-      "com.recipegrace.electric" %% "core" % electricVersion
+      "com.recipegrace" %% "core" % electricVersion
     ),
-    dependencyOverrides ++= Set(
-      "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0"
-    ),
-    parallelExecution in Test := false,
-    resolvers ++= Resolvers.allResolvers,
-    publishTo := Some(Resolvers.recipegrace),
-
-    credentials +=Credentials(Path.userHome / ".sbt" / ".credentials")
+ //   dependencyOverrides ++= Set(
+ //     "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.4"
+ //   ),
+    resolvers ++= Seq("Recipegrace snapshots" at "http://recipegrace.com/nexus/content/repositories/snapshots/"),
+    parallelExecution in Test := false
 )
 
   val electricJobSettings = Seq(
     test in assembly := {},
     libraryDependencies ++= Seq(
       "org.apache.commons" % "commons-lang3" % "3.4",
-      "com.recipegrace.electric" %% "electric" % electricVersion,
+      "com.recipegrace" %% "electric" % electricVersion,
       "org.apache.hadoop" % "hadoop-streaming" % hadoopVersion % "provided" ,
       "org.apache.spark" %% "spark-core" % sparkVersion % "provided"
     )
