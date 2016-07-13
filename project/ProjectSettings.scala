@@ -8,6 +8,14 @@ object ProjectSettings {
   val hadoopVersion = "2.2.0"
   val electricVersion = "0.0.4"
   val organizationName="com.recipegrace"
+  val username = System.getenv().get("SONATYPE_USERNAME")
+
+  val password = System.getenv().get("SONATYPE_PASSWORD")
+
+  val passphrase = System.getenv().get("PGP_PASSPHRASE") match {
+      case x:String => x
+      case null => ""
+      }
 
   // sbt-assembly settings for building a fat jar
   lazy val sparkAssemblySettings = Seq(
@@ -35,7 +43,10 @@ object ProjectSettings {
 
   )
   val coreSettings = Seq(
-    scalaVersion := "2.10.6",
+    pgpPassphrase := Some( passphrase.toCharArray),
+    pgpSecretRing := file("local.secring.gpg"),
+    pgpPublicRing := file("local.pubring.gpg"),
+    crossScalaVersions := Seq("2.10.6", "2.11.5"),
     organization := organizationName,
     libraryDependencies ++= Seq(
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0",
@@ -44,7 +55,34 @@ object ProjectSettings {
  //   dependencyOverrides ++= Set(
  //     "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.4"
  //   ),
-    resolvers ++= Seq("Recipegrace snapshots" at "http://recipegrace.com/nexus/content/repositories/snapshots/"),
+    publishTo := {
+      val nexus = "https://oss.sonatype.org/"
+      if (isSnapshot.value) Some(Resolvers.ossSnapshots)
+      else Some(Resolvers.ossStaging)
+    },
+    credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password),
+    pomIncludeRepository := { _ => false },
+    pomExtra := (
+      <url>http://recipegrace.com/recipegrace</url>
+        <licenses>
+          <license>
+            <name>BSD-style</name>
+            <url>http://www.opensource.org/licenses/bsd-license.php</url>
+            <distribution>repo</distribution>
+          </license>
+        </licenses>
+        <scm>
+          <url>git@github.com:recipegrace/BigLibrary.git</url>
+          <connection>scm:git:git@github.com:recipegrace/BigLibrary.git</connection>
+        </scm>
+        <developers>
+          <developer>
+            <id>feroshjacob</id>
+            <name>Ferosh Jacob</name>
+            <url>http://www.feroshjacob.com</url>
+          </developer>
+        </developers>),
+    resolvers ++= Resolvers.allResolvers)
     parallelExecution in Test := false
 )
 
