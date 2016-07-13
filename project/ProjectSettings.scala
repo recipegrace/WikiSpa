@@ -1,6 +1,8 @@
+import com.typesafe.sbt.SbtPgp.autoImportImpl._
 import sbt.Keys._
 import sbt._
 import sbtassembly.AssemblyKeys._
+
 
 object ProjectSettings {
 
@@ -82,7 +84,7 @@ object ProjectSettings {
             <url>http://www.feroshjacob.com</url>
           </developer>
         </developers>),
-    resolvers ++= Resolvers.allResolvers)
+    resolvers ++= Resolvers.allResolvers,
     parallelExecution in Test := false
 )
 
