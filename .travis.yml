@@ -9,9 +9,9 @@ scala:
 jdk:
 - oraclejdk8
 before_install:
-- openssl aes-256-cbc -pass pass:$PGP_PASSPHRASE -in secring.gpg.enc -out local.secring.gpg
+- openssl aes-256-cbc -pass pass:$PGP_PASSPHRASE -in local.secring.gpg.enc -out local.secring.gpg
   -d
-- openssl aes-256-cbc -pass pass:$PGP_PASSPHRASE -in pubring.gpg.enc -out local.pubring.gpg
+- openssl aes-256-cbc -pass pass:$PGP_PASSPHRASE -in local.pubring.gpg.enc -out local.pubring.gpg
   -d
 env:
   global:
