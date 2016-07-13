@@ -6,8 +6,7 @@ object ProjectSettings {
 
   val sparkVersion = "1.6.1"
   val hadoopVersion = "2.2.0"
-  val electricVersion = "0.0.2"
-  val currentVersion="0.0.1-SNAPSHOT"
+  val electricVersion = "0.0.4"
   val organizationName="com.recipegrace"
 
   // sbt-assembly settings for building a fat jar
@@ -36,7 +35,6 @@ object ProjectSettings {
 
   )
   val coreSettings = Seq(
-    version := currentVersion,
     scalaVersion := "2.10.6",
     organization := organizationName,
     libraryDependencies ++= Seq(

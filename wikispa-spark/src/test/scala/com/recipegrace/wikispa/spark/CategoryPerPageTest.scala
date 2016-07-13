@@ -2,10 +2,6 @@ package com.recipegrace.wikispa.spark
 
 import java.nio.charset.StandardCharsets
 
-import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
-import com.recipegrace.biglibrary.electric.tests.{TwoInputJobTest, SimpleJobTest}
-import com.recipegrace.wikispa.spark.SplitWikiFile.SerializationType
-
 /**
  * Created by Ferosh Jacob on 10/10/15.
  */
@@ -24,7 +20,7 @@ class CategoryPerPageTest extends BaseWikiJobTest {
 
     val output= createTempPath()
 
-    launch(CategoryPerPage, ThreeArgument(  "files/enwiki-sample.xml","", output))
+    launch(CategoryPerPage, WikiFileAndSerialization(  "files/enwiki-sample.xml","", output))
 
     testByLocalFile(output)
 

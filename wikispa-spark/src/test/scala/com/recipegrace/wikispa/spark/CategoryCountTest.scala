@@ -2,9 +2,6 @@ package com.recipegrace.wikispa.spark
 
 import java.nio.charset.StandardCharsets
 
-import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
-import com.recipegrace.wikispa.spark.SplitWikiFile.SerializationType
-
 /**
  * Created by Ferosh Jacob on 10/10/15.
  */
@@ -25,7 +22,7 @@ class CategoryCountTest extends BaseWikiJobTest {
 
     val output= createTempPath()
 
-    launch(CategoryCount, ThreeArgument(  "files/enwiki-sample.xml","", output))
+    launch(CategoryCount, WikiFileAndSerialization(  "files/enwiki-sample.xml","", output))
 
     testByLocalFile(output)
 
