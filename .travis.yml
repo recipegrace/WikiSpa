@@ -19,12 +19,9 @@ env:
   - secure: NT08X7wocoWaWNZqJohRIi+8AF2cxjF8Iy5lrfcItEV9o7/2u88EP7QfNh3iHhIRJ6TwljW626ofYvhsqKYGCAEqd9Xouyk7ZoK/QmLm8MxmX18x6E82lbgXyISdyIgoNVL8P1ZmBESBeaMZG6pUSMgDcgawNZu1g2lrqcjeQAlOa6G1JRG3wUoKLuaK2yBdsqBgGm8/crOdQeiFD5y8jQ0dvhRxJEdrZUR9ZW8Hrv1V9hgEDKzF06ADwTPjrUbTCV795QIDzWTs8thj6eN8gugEobotsmsgulz1dbDkbCJd1rjeyuhJ/6hiea6F6wwEyFJauogTUAQ3ABtcBGqgj7jsPU0vQb1AnMDz87L3nNq7nF0/YLrjQcnOCjulhsp8tXlpnInPJtMCDGREaAl0/vh1C0NSTUnjYo5+qwkXAorEpIkx/h0UPjODS1rZkGzmAi0yxYlAQ8Lo0xjHgCeQLR4kjTOLfQ49KSduyO1Atl8Cb8UWuZ4WXexSpYiWLOfGbG9loT41fswQ8oddOJ+CVw6jcfqW39K/r4k+paMJleZTFDRPMhKP9dZmznAJvhKGbBFB+4EyHTZR9IE0RicVFEianVuJ/6DrE7eH+VyMu3VDMxPPM+dRzQ0wJziIBNdKeXV/Nuf7BAfV53drooQVM7mawklphqR8sCIpcPmZzis=
   - secure: iISF1Rbe8C3+BUBMy+kziJRoeXLMJLdP0SGXjJ6HpDPEIIG/cshV2kuBlw4K6EJP7al5lFfn9xbaT/oMU/ZYgMBwIz9ZYDhwOJVG9wjIsh6ly9NXIAbo1ubQHuvq2qLJ8xslrW9V6tZyPTKLi+Vikn1NjjfEnnUf/PCw/0zbXgLxbK1DuT9TCkeB399Ze9ueKsEJKa7vWiEvrCt4WvU9qf9c/89SDykoFMoD0D9dlEBev+34aj8XMg1pM4YN2iS+YIBx9R106apKHKSkKxudaA7Bw73Uba9pg1ARHfBwIVkaPK9EXvl7CB6sKuQbyn0VHT+I921GC0qb6NZ+VA+uFWLK69qklo1KwcRmOneh07cUkwmd9I2DWiSy9LZye0+EB3hIqm9k6pE58kroCYFHejsyMojyVRlyqNqbjurNsfPF4+arN5kc3N1WpNXMpPMNlmwJhD/3oRyMGwk4+OHJPrmaxkINofJuGsVTAsxNyvFH1Pm1dnYK19aTJoA5vMKWgImk1xB0SQcqbmWSv+oSFh/nLWv5505419UHwxVJpMYGY/r21QuSVBCnia6yxTdoJb7w0Ua+P5E3yMpvtKOFt12ziU1BZf5/fBWlfKG8s1hae+WQDfKhTKTlKKJ+9towB1/KQp47aG4zSzQ6NMQkTUeMQv/gShTMDkeUEJAoKNU=
 script:
-- ./sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M
-  test
-- ./sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M
-  electricexamples/test
-- if [ "$TRAVIS_BRANCH" == "master" ]; then ./sbt ++$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8
-  -J-XX:ReservedCodeCacheSize=256M publish-signed; fi
+  - ./sbt ++$TRAVIS_SCALA_VERSION test
+  - ./sbt ++$TRAVIS_SCALA_VERSION electricexamples/test
+- if [ "$TRAVIS_BRANCH" == "master" ]; then ./sbt ++$TRAVIS_SCALA_VERSION publish-signed; fi
 notifications:
   email:
     recipients:
