@@ -20,7 +20,6 @@ env:
   - secure: iISF1Rbe8C3+BUBMy+kziJRoeXLMJLdP0SGXjJ6HpDPEIIG/cshV2kuBlw4K6EJP7al5lFfn9xbaT/oMU/ZYgMBwIz9ZYDhwOJVG9wjIsh6ly9NXIAbo1ubQHuvq2qLJ8xslrW9V6tZyPTKLi+Vikn1NjjfEnnUf/PCw/0zbXgLxbK1DuT9TCkeB399Ze9ueKsEJKa7vWiEvrCt4WvU9qf9c/89SDykoFMoD0D9dlEBev+34aj8XMg1pM4YN2iS+YIBx9R106apKHKSkKxudaA7Bw73Uba9pg1ARHfBwIVkaPK9EXvl7CB6sKuQbyn0VHT+I921GC0qb6NZ+VA+uFWLK69qklo1KwcRmOneh07cUkwmd9I2DWiSy9LZye0+EB3hIqm9k6pE58kroCYFHejsyMojyVRlyqNqbjurNsfPF4+arN5kc3N1WpNXMpPMNlmwJhD/3oRyMGwk4+OHJPrmaxkINofJuGsVTAsxNyvFH1Pm1dnYK19aTJoA5vMKWgImk1xB0SQcqbmWSv+oSFh/nLWv5505419UHwxVJpMYGY/r21QuSVBCnia6yxTdoJb7w0Ua+P5E3yMpvtKOFt12ziU1BZf5/fBWlfKG8s1hae+WQDfKhTKTlKKJ+9towB1/KQp47aG4zSzQ6NMQkTUeMQv/gShTMDkeUEJAoKNU=
 script:
   - ./sbt ++$TRAVIS_SCALA_VERSION test
-  - ./sbt ++$TRAVIS_SCALA_VERSION electricexamples/test
   - if [ "$TRAVIS_BRANCH" == "master" ]; then ./sbt ++$TRAVIS_SCALA_VERSION publish-signed; fi
 notifications:
   email:
