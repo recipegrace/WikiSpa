@@ -14,7 +14,7 @@ object ProjectSettings {
 
   val password = System.getenv().get("SONATYPE_PASSWORD")
 
-  println("Current user:"+System.getenv().get("HOLA"))
+  println("Current user:"+System.getenv().get("SONATYPE_USERNAME"))
   val passphrase = System.getenv().get("PGP_PASSPHRASE") match {
       case x:String => x
       case null => ""
