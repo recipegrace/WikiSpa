@@ -6,9 +6,9 @@ import sbtassembly.AssemblyKeys._
 
 object ProjectSettings {
 
-  val sparkVersion = "1.6.1"
+  val sparkVersion = "2.0.0"
   val hadoopVersion = "2.2.0"
-  val electricVersion = "0.0.4"
+  val electricVersion = "0.0.5-SNAPSHOT"
   val organizationName="com.recipegrace"
   val username = System.getenv().get("SONATYPE_USERNAME")
 
@@ -48,7 +48,7 @@ object ProjectSettings {
     pgpPassphrase := Some( passphrase.toCharArray),
     pgpSecretRing := file("local.secring.gpg"),
     pgpPublicRing := file("local.pubring.gpg"),
-    crossScalaVersions := Seq("2.10.6", "2.11.5"),
+    scalaVersion :=  "2.11.6",
     organization := organizationName,
     libraryDependencies ++= Seq(
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0",
@@ -102,7 +102,7 @@ object ProjectSettings {
   val wikispaSettings = Seq(
     test in assembly := {},
     libraryDependencies ++= Seq(
-   "org.dbpedia.extraction" % "core" % "4.2-SNAPSHOT",
+   "org.dbpedia.extraction" % "core" % "4.1",
      "org.scalaj" %% "scalaj-http" % "1.1.5"
     )
   )
