@@ -10,12 +10,12 @@ object ProjectSettings {
   val hadoopVersion = "2.2.0"
   val electricVersion = "0.0.5-SNAPSHOT"
   val organizationName="com.recipegrace"
-  val username = System.getenv().get("SONATYPE_USERNAME")
+  val username = System.getenv().get("USERNAME")
 
-  val password = System.getenv().get("SONATYPE_PASSWORD")
+  val password = System.getenv().get("PASSWORD")
 
-  println("Current user:"+System.getenv().get("SONATYPE_USERNAME"))
-  val passphrase = System.getenv().get("PGP_PASSPHRASE") match {
+  println("Current user:"+System.getenv().get("USERNAME"))
+  val passphrase = System.getenv().get("PASSPHRASE") match {
       case x:String => x
       case null => ""
       }
