@@ -8,20 +8,17 @@ The project is focused in executing wikipedia queries locally or in a Spark clus
 
 An example to print out all the wikipedia pageids and their categories separated by TAB is shown below. 
 ```scala
-object CategoryPerPage extends SimpleJob with WikiAccess{
-  override def execute(input: String, output: String)(ec: ElectricContext)= {
-    implicit val context = ec
-    val categoriesCount =
-      wikiXML(input)
-        .map(f => {
-             //Category's extract method return (wikiPageId:Long, categories:List[String])
-            //Check out wikispa core project to checkout more wiki operations
-             Categories.extract(f).getOrElse((0L, List(): List[String]))
-         })
+object CategoryPerPage extends ElectricJob[WikiFileAndSerialization] with  WikiAccess  with FileAccess {
+
+
+  override def execute(argument:WikiFileAndSerialization)(implicit ec: ElectricContext)={
+   val categoriesCount=   wikiPages(argument.wikiFile, argument.serializationType)
+        .map(f => Categories.extractByPage(f).getOrElse((0L, List(): List[String])))
+
         .filter(f => f._1 != 0 && f._2.nonEmpty)
         .map(f=> f._1 + "\t"+f._2.mkString("\u0001"))
 
-    writeFile(categoriesCount,output)
+    writeFile(categoriesCount,argument.output)
 
   }
 }
@@ -37,9 +34,6 @@ The code runs on a (16GB, OSX) laptop for the latest wikipedia data(enwiki-20151
  For the rich and the impatient, the code below can be deployed and executed in a Hadoop cluster.    
 
 
-<h3>Repository location </h3>
+<i>Repository available at OSS releases </i>
 
-```scala  
-"Recipegrace repo" at "http://recipegrace.com:8080/nexus/content/repositories/releases/"
-```
 
