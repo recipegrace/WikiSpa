@@ -1,12 +1,12 @@
 package com.recipegrace.wikispa.spark
 
-import com.recipegrace.biglibrary.electric.{ElectricContext, ElectricJob}
-import com.recipegrace.wikispa.extractors.{Pages, Categories}
-import org.apache.hadoop.io.{Text, LongWritable}
+import com.recipegrace.biglibrary.electric.ElectricContext
+import com.recipegrace.wikispa.extractors.Pages
+import org.apache.hadoop.io.{LongWritable, Text}
 import org.apache.hadoop.mapred.JobConf
 import org.apache.spark.rdd.RDD
 
-import scala.xml.{XML, Elem}
+import scala.xml.{Elem, XML}
 
 /**
  * Created by Ferosh Jacob on 10/12/15.

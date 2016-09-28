@@ -2,15 +2,12 @@ package com.recipegrace.wikispa.spark
 
 import java.nio.charset.StandardCharsets
 
-import com.recipegrace.biglibrary.core.BaseTest
-import com.recipegrace.biglibrary.electric.jobs.Arguments.ThreeArgument
-import com.recipegrace.biglibrary.electric.tests.{ElectricJobTest, SimpleJobTest}
-import com.recipegrace.wikispa.spark.SplitWikiFile.SerializationType
+import com.recipegrace.biglibrary.electric.tests.ElectricJobTest
 
 /**
  * Created by Ferosh Jacob on 10/10/15.
  */
-class LinksPerPageTest extends ElectricJobTest[AllLinksArgument] {
+class LinksPerPageTest extends ElectricJobTest {
 
 
 
@@ -53,7 +50,7 @@ class LinksPerPageTest extends ElectricJobTest[AllLinksArgument] {
   def runWikiJob(serializationType: String) = {
     val wikiOut = createTempPath()
 
-    SplitWikiFile.runLocal(ThreeArgument("files/enwiki-sample.xml", serializationType, wikiOut))
+    SplitWikiFile.runLocal(WikiFileAndSerialization("files/enwiki-sample.xml", serializationType, wikiOut))
 
     val redirects= createTempPath()
     val disambigs =createTempPath()

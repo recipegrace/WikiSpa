@@ -1,7 +1,6 @@
 package com.recipegrace.wikispa.spark
 
-import com.recipegrace.biglibrary.electric.{ElectricJob, ElectricContext}
-import com.recipegrace.biglibrary.electric.jobs.{ArgumentsToMap, SequenceFileJob, TwoInputJob, SimpleJob}
+import com.recipegrace.biglibrary.electric.{ElectricContext, ElectricJob}
 import com.recipegrace.wikispa.extractors.LinkObjects.Link
 import com.recipegrace.wikispa.extractors.Links
 import com.recipegrace.wikispa.spark.CategoryPerPage._
@@ -12,7 +11,7 @@ import org.apache.spark.rdd.RDD
  * Created by Ferosh Jacob on 10/10/15.
  */
 case class AllLinksArgument(input:String, redirects:String, disambigs:String, internalLinks:String, serialization:String)
-object LinksPerPage extends SequenceFileJob[AllLinksArgument] with WikiAccess with ArgumentsToMap{
+object LinksPerPage extends ElectricJob[AllLinksArgument] with WikiAccess{
   val WIKIURL = """https?\:\/\/en\.wikipedia\.org\/wiki\/(.*)""".r
 
   def formatURL(url:String) = {
@@ -74,19 +73,5 @@ object LinksPerPage extends SequenceFileJob[AllLinksArgument] with WikiAccess wi
     writeToFile(internalLinks,t.internalLinks)
   }
 
-  override def parse(args: Array[String]): AllLinksArgument = {
 
-    require(args.length==10, "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
-
-    val mapArgs=convertArgsToMap(args)
-
-    require(mapArgs.contains("input"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
-    require(mapArgs.contains("redirects"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
-    require(mapArgs.contains("disambigs"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
-    require(mapArgs.contains("internalLinks"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
-    require(mapArgs.contains("serialization"), "Should have --input val --redirects val --disambigs val --internalLinks val --serialization val")
-
-    AllLinksArgument(mapArgs("input"), mapArgs("redirects"), mapArgs("disambigs"), mapArgs("internalLinks"), mapArgs("serialization"))
-
-  }
 }

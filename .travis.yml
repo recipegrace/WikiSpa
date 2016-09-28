@@ -1,1 +1,24 @@
-script: "./sbt test"
+sudo: false
+language: scala
+cache:
+  directories:
+  - $HOME/.ivy2/cache
+  - $HOME/.sbt/boot/
+scala:
+- 2.11.6
+jdk:
+- oraclejdk8
+before_install:
+- openssl aes-256-cbc -pass pass:$PASSPHRASE -in local.secring.gpg.enc -out local.secring.gpg
+  -d
+- openssl aes-256-cbc -pass pass:$PASSPHRASE -in local.pubring.gpg.enc -out local.pubring.gpg
+  -d
+env:
+  global:
+  - secure: Kfv0yGrMZhujrKyDn+Y+NiH6G4OjkheUNEq0M0UIe2HmzJ8NrS0LBWCVIMy7ydlhPhu3LIXopgs1MARynpM6MhggbwHpLN9kSlcaXyi9XxkIThu44QJGuVRYq7CzHOGam+2pmmjbA3qeQHQsyDGaJxjmVvSu2gyG6RS+2T/IU2kIpyT+DhZTZgBoxcCtPz/r81fdMEtOAZUkbyI3ri0qjZn9pE7Kjzv/xYJDV+kW3Tjc8I5rsrQZzcOQIvz6oKFXxyQQkhQPwywwDMlXbEYAiftu1kz9PzMS5FA/DIlPiZtEhGGrtzzyH4AWFsqj+iDTeazaC65WWh7fqco06mH/kRDg5L4phmMAStbGjLAcTJIG9ZgkqDXOzhkvPYhIiUrcm4GBR6oBpn68Q7SfanENq6y5n7k9CKpwY9fNY997Z86yoYHg23ijLbnXsb06Q/owdZcaNwlShkG3JZ+/tuKHCOe5fPjQEqOaV3mvZgWEKNR0sNKaYFDvh/XVG9+qw5/aQDQRhLdpQeFK9YmHyWfbCjq5L+J+aQH/AqC1CO5VreRveDuht7yW3gkcexGKJZRigADo0ymY/vKRJYT3ijFi0KLmd4OIkJ0ZaqtkbKOZc6Lz34a/jLq4nnVKqLNtjV62a/tfez0Y2/l6xA3wvC1EuIhS0CjKxfNESVPZWLeUEZ4=
+  - secure: QEnHoBIm83RPNqF9nh+O9O4RUPPnox2hoecUk4CKnIsWIULo7wqCcLjK8eFS0uj4l959oS7SwhGlVXwCgivgwaoK2Mh0okIHgvBFJQpCqdM6XLKymmQn2QJIC40/QwzJUZw4uPx9VC6iJbQDJf+ZmtELrriT4T1OVCoWq4CKWV6QMIYOmfa7bl74lDU05OXFZzQP6tvlYsVoWiBqhC7X9UzimLmj95d3VuF/xAmYHK1ECJvRAn0nrUp9a34Sbcr9Yyiv3x+BeRCflrGWX1w4lT+mKJSIikKuxK2TfDauAHDc25rQPtnvBgeaOgNam3vse+RpWEyLTSyNy/YzL6kDaFMvdG4zQ9lkaXuZnjVOQmGJXpuE77/gMVucNpDeVdXnXJcVp3bJLtqtxPssJ6ccBy1Ve48xMFNDeNFk3+uCsw/1x8MfJ8FFEeJ+L7h8FN05EDS2nzfOD7Y3sdQ9zNkoIaWTVBbYD0o+elEwkrhJ0WSzQmEv5pJzQsIVSYjlCjr2OSYscIf8o1F02Yz51pWWOAP++7d03BTvDiyzNvy1X1PiEgyZFwSrcwNBGbZO2ihlNFJlFovgZm9WN/h33i46aN8O8XicsTg6KkcgkEWz1CwZwm7FSrjZ+j9MbDIMUhFUsULYsr1g6dMlxI8PZ1hh1M4YLZZiIQCYq2yxPOl4FwE=
+  - secure: CDcQfnkdNnTtvgfBatX6KjDkh2LPJcirfqjRHgGq0z34H6qjgvNg8Tvbx1bFnvOQPbxqn27rSjoqjVTUxbQ3II1TpOP7bWCkOpxdvAI7hKsekfM6ade8Um4O5drxxn25HuOdQ6s0TPT4ioSrz4wABl+rY+m9pJyZh3CTBD40PpSr0Omeu9W1kA4T1NfiVmiw5MKFj+2jwdN8ICFVAa27v6p6nCu2GIAaTV5k/rbjkRdSos0Rb6LaKX60TdXM8vowViB+ZQl7y4zA0yyOxIIS9D69YPl7RADnhzgpcECWNT962XDbH2hBv+Boe2FUf1fpfMVPA4tJypZiFVyX1wI5XoXmvepuL8BjbR6NCSr3l+xf/GxXdOV43tiFTY1PyOBgVQprsdXjPQKZ45mngqoTH/PVcGoSAtg5+gjDj33RaoRGUxqBj/dDbnUx6K0w6G3nqPe8VeoWFp20cjeFxoiJp3NihrJ5LTHSgoYqCv4AnP8Ll1Dt6e/ZQkhPx1c3lKj9pRaQJqqNl1Kh1PHozLRvdIVShgA9GnehEN5HMlej726AzxX3gCarW4dJBJqun2XrZdhIUDd8a/sPyHDq9mPQOJ+z/SUQTsoduli8IZfpLjdvMgzMk3UmR+nozCtaeHd0FVVtzN+cKC4iFIJ4sZzFQsbcMuYdwzdzXlFt73GMPbk=
+script:
+- ./sbt ++$TRAVIS_SCALA_VERSION test
+- if [ "$TRAVIS_BRANCH" == "master" ]; then ./sbt ++$TRAVIS_SCALA_VERSION publish-signed;
+  fi

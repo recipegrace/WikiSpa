@@ -1,27 +1,24 @@
 package com.recipegrace.wikispa.spark
 
-import com.recipegrace.biglibrary.electric.ElectricContext
-import com.recipegrace.biglibrary.electric.jobs.TwoInputJob
+import com.recipegrace.biglibrary.electric.{ElectricContext, ElectricJob, FileAccess}
 /**
  * Created by Ferosh Jacob on 10/25/15.
  */
-object SplitWikiFile extends TwoInputJob with WikiAccess {
+object SplitWikiFile extends ElectricJob[WikiFileAndSerialization] with  WikiAccess  with FileAccess {
 
 
-
-  override def execute(input: String, serializationType: String, output: String)(implicit ec: ElectricContext): Unit = {
-
+  override def execute(argument:WikiFileAndSerialization)(implicit ec: ElectricContext)={
 
 
-       val  wikiPages=   wikiXMLStreaming(input)
+       val  wikiPages=   wikiXMLStreaming(argument.wikiFile)
 
-        getSerializationType(serializationType) match {
-          case ObjectFile => wikiPages.saveAsObjectFile(output)
+        getSerializationType(argument.serializationType) match {
+          case ObjectFile => wikiPages.saveAsObjectFile(argument.output)
           case SequenceFile => {
             wikiPages.map(f=> (1, f.toString()))
-            .saveAsSequenceFile(output)
+            .saveAsSequenceFile(argument.output)
           }
-          case _ => wikiPages.saveAsTextFile(output)
+          case _ => wikiPages.saveAsTextFile(argument.output)
         }
 
   }

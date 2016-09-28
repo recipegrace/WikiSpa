@@ -1,14 +1,24 @@
+import com.typesafe.sbt.SbtPgp.autoImportImpl._
 import sbt.Keys._
 import sbt._
 import sbtassembly.AssemblyKeys._
 
+
 object ProjectSettings {
 
-  val sparkVersion = "1.6.1"
+  val sparkVersion = "2.0.0"
   val hadoopVersion = "2.2.0"
-  val electricVersion = "0.0.2"
-  val currentVersion="0.0.1-SNAPSHOT"
+  val electricVersion = "0.0.5-SNAPSHOT"
   val organizationName="com.recipegrace"
+  val username = System.getenv().get("USERNAME")
+
+  val password = System.getenv().get("PASSWORD")
+
+  println("Current user:"+System.getenv().get("USERNAME"))
+  val passphrase = System.getenv().get("PASSPHRASE") match {
+      case x:String => x
+      case null => ""
+      }
 
   // sbt-assembly settings for building a fat jar
   lazy val sparkAssemblySettings = Seq(
@@ -36,8 +46,10 @@ object ProjectSettings {
 
   )
   val coreSettings = Seq(
-    version := currentVersion,
-    scalaVersion := "2.10.6",
+    pgpPassphrase := Some( passphrase.toCharArray),
+    pgpSecretRing := file("local.secring.gpg"),
+    pgpPublicRing := file("local.pubring.gpg"),
+    scalaVersion :=  "2.11.6",
     organization := organizationName,
     libraryDependencies ++= Seq(
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.5.0",
@@ -46,7 +58,34 @@ object ProjectSettings {
  //   dependencyOverrides ++= Set(
  //     "com.fasterxml.jackson.core" % "jackson-databind" % "2.4.4"
  //   ),
-    resolvers ++= Seq("Recipegrace snapshots" at "http://recipegrace.com/nexus/content/repositories/snapshots/"),
+    publishTo := {
+      val nexus = "https://oss.sonatype.org/"
+      if (isSnapshot.value) Some(Resolvers.ossSnapshots)
+      else Some(Resolvers.ossStaging)
+    },
+    credentials += Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password),
+    pomIncludeRepository := { _ => false },
+    pomExtra := (
+      <url>http://recipegrace.com/recipegrace</url>
+        <licenses>
+          <license>
+            <name>BSD-style</name>
+            <url>http://www.opensource.org/licenses/bsd-license.php</url>
+            <distribution>repo</distribution>
+          </license>
+        </licenses>
+        <scm>
+          <url>git@github.com:recipegrace/BigLibrary.git</url>
+          <connection>scm:git:git@github.com:recipegrace/BigLibrary.git</connection>
+        </scm>
+        <developers>
+          <developer>
+            <id>feroshjacob</id>
+            <name>Ferosh Jacob</name>
+            <url>http://www.feroshjacob.com</url>
+          </developer>
+        </developers>),
+    resolvers ++= Resolvers.allResolvers,
     parallelExecution in Test := false
 )
 
@@ -64,7 +103,7 @@ object ProjectSettings {
   val wikispaSettings = Seq(
     test in assembly := {},
     libraryDependencies ++= Seq(
-   "org.dbpedia.extraction" % "core" % "4.2-SNAPSHOT",
+   "org.dbpedia.extraction" % "core" % "4.1",
      "org.scalaj" %% "scalaj-http" % "1.1.5"
     )
   )

@@ -22,6 +22,6 @@ project/project
 .classpath
 .settings/
 .idea/
-
+local.*
 #Project-specific changes
 .tests/
